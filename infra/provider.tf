@@ -1,0 +1,35 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "helm" {
+  kubernetes = {
+    host                   = module.eks.endpoint
+    cluster_ca_certificate = base64decode(module.eks.ca_data)
+    token                  = data.aws_eks_cluster_auth.eks.token
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = "afasfasfas2421asfsarittfsatahbwt"
+    key = "terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "terraform-tfstate"
+    encrypt = true
+  }
+  required_providers {
+    aws = {
+        source = "hashicorp/aws"
+        version = "~> 5.0"
+    }
+    helm = {
+
+    }
+  }
+}
+
+data "aws_eks_cluster_auth" "eks" {
+  name = var.eks_name
+}
+

@@ -10,7 +10,7 @@ env:
 
 jobs:
   bootstrap-aws-acc:
-    name: Create pre-requisites
+    name: Infra pre-requisites 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code from master
@@ -32,7 +32,7 @@ jobs:
           parameter-overrides: BucketName=afasfasfas2421asfsarittfsatahbwt,RepoName=${{ env.ECR_REPOSITORY }}
 
   build-and-push:
-    name: Build and Push
+    name: Build and Push to ECR
     runs-on: ubuntu-latest
     needs: bootstrap-aws-acc
     steps:
@@ -68,3 +68,30 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ steps.vars.outputs.sha_short }}
+
+  plan:
+    name: Terraform plan
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - name: Checkout code from master
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      
+      - name: Terraform Init
+        run: terraform init
+
+      - name: View Terraform Plan
+        run: terraform plan
