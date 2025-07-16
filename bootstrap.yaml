@@ -5,6 +5,9 @@ Parameters:
   BucketName:
     Type: String
     Description: Name of the S3 bucket
+  RepoName:
+    Type: String
+    Description: Name of ECR image repo to store hostname
 
 Resources:
   S3Bucket:
