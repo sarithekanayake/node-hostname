@@ -9,11 +9,35 @@ env:
   ECR_REPOSITORY: node-hostname
 
 jobs:
+  bootstrap-aws-acc:
+    name: Create pre-requisites
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code from master
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Run AWS CloudFormation template
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: aws-acc-bootstrap
+          template: bootstrap.yaml
+          no-fail-on-empty-changeset: "1"
+          parameter-overrides: >-
+            BucketName=afasfasfas2421asfsarittfsatahbwt
+            RepoName=${{ env.ECR_REPOSITORY }}
+
   build-and-push:
     name: Build and Push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code from master
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials
