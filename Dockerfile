@@ -2,7 +2,7 @@ FROM node:24.4.0-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY src/package*.json ./
 
 RUN --mount=type=cache,target=/app/.npm \
     npm set cache /app/.npm && \
@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/app/.npm \
 
 USER node
 
-COPY --chown=node:node . .
+COPY --chown=node:node src/ .
 
 EXPOSE 3000
 
