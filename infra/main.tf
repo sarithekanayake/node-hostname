@@ -1,3 +1,9 @@
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+  region     = data.aws_region.current.name
+  ecr_repo    = "${local.account_id}.dkr.ecr.${local.region}.amazonaws.com/${var.repo_name}"
+}
+
 module "vpc" {
   source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.0"
 
@@ -45,6 +51,8 @@ resource "helm_release" "node-hostname" {
     "public_subnets"  = join(",", module.vpc.public_subnet_ids)
     "security_groups" = join(",", [module.eks.alb_sg, module.eks.cluster_sg])
     "domain_name"     = "${var.domain_name}"
+    "repo"            = "${local.ecr_repo}"
+    "image_tag"       = "${var.image_tag}"
   }
   ))]
   depends_on = [ module.dns ]

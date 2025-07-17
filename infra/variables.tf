@@ -22,7 +22,7 @@ variable "domain_name" {
   default = "sarithe.online"
 }
 
-variable "ecr_repo" {
+variable "repo_name" {
   type = string
   description = "ECR repo to store node-hostname docker images"
   default = "node-hostname"
@@ -50,4 +50,9 @@ variable "aws_lbc_version" {
   type = string
   description = "Helm chart version of AWS Load Balancer Controller"
   default = "1.9.2"
+}
+
+variable "image_tag" {
+  type = string
+  description = "Image tag of the docker image"
 }
