@@ -8,6 +8,8 @@ env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: node-hostname
   S3BucketName: bwt-tfstate-sarith-xs352445sffysfc
+  TF_Key: terraform.tfstate
+  Dynamodb_Table: terraform-tfstate
 
 jobs:
   bootstrap-aws-acc:
@@ -92,7 +94,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
       
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="bucket=${{ env.S3BucketName }}" -backend-config="key=${{ env.TF_Key }}" -backend-config="region=${{ env.AWS_REGION }}" -backend-config="dynamodb_table=${{ env.Dynamodb_Table }}"
 
       - name: View Terraform Plan
         run: terraform plan
@@ -119,7 +121,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
       
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="bucket=${{ env.S3BucketName }}" -backend-config="key=${{ env.TF_Key }}" -backend-config="region=${{ env.AWS_REGION }}" -backend-config="dynamodb_table=${{ env.Dynamodb_Table }}"
 
       - name: Run Terraform Apply
         run: terraform apply --auto-approve
