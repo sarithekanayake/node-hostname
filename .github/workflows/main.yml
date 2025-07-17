@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: node-hostname
-  S3BucketName: bwt-tfstate-sarith-xs3523sffysfc
+  S3BucketName: bwt-tfstate-sarith-xs352445sffysfc
 
 jobs:
   bootstrap-aws-acc:
