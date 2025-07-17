@@ -100,7 +100,7 @@ jobs:
         run: terraform plan
 
   apply:
-    name: Deploying Infrastructure in AWS
+    name: Deploying Infrastructure
     runs-on: ubuntu-latest
     needs: plan
     defaults:
