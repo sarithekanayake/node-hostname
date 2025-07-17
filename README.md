@@ -10,7 +10,7 @@ This repository uses Terraform, CloudFormation, and Helm chart configurations to
 
 - **Dockerfile**:
 `Dockerfile` uses to create docker images of node-hostname application.
-  - Using Alpine as the base image. Alpine image is a lightweight.
+  - Using Alpine as the base image. Alpine is a lightweight Linux distro (~55MB).
   - Version 24.4.0 is used for stability and predictability in deployments. 
   - A lightweight image is also beneficial from a security perspective, as it includes fewer dependencies.
   - Using /app as the Workdir and non-root node user to run the image.
