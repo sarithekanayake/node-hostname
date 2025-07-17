@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.2.0"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.0"
 
   env = var.env
   no_of_pri_subs = 2
@@ -8,7 +8,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.2.0"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.4.0"
 
   env = var.env
   eks_name = var.eks_name
@@ -28,9 +28,24 @@ module "eks" {
 }
 
 module "dns" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.2.0"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.4.0"
 
   domain_name = var.domain_name
 
   depends_on = [ module.eks ]
+}
+
+resource "helm_release" "node-hostname" {
+  name = "node-hostname"
+  chart = "../helm/node-hostname"
+  namespace = "default"
+  values = [sensitive(templatefile("./base_values/values.yaml",
+  {
+    "cert_arn"        = "${module.dns.ssl_cert}"
+    "public_subnets"  = join(",", module.vpc.public_subnet_ids)
+    "security_groups" = join(",", [module.eks.alb_sg, module.eks.cluster_sg])
+    "domain_name"     = "${var.domain_name}"
+  }
+  ))]
+  depends_on = [ module.dns ]
 }
