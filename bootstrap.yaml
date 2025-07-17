@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Create a S3 Bucket, DynamoDB Table and ECR for images
+Description: Create a S3 Bucket, DynamoDB Table and ECR
 
 Parameters:
   BucketName:
@@ -7,7 +7,7 @@ Parameters:
     Description: Name of the S3 bucket
   RepoName:
     Type: String
-    Description: Name of ECR image repo to store hostname
+    Description: Name of ECR image repo to store docker images
 
 Resources:
   S3Bucket:
