@@ -47,6 +47,7 @@ resource "helm_release" "node-hostname" {
   namespace = "default"
   values = [sensitive(templatefile("./base_values/values.yaml",
   {
+    "replicas"        = "2"
     "cert_arn"        = "${module.dns.ssl_cert}"
     "public_subnets"  = join(",", module.vpc.public_subnet_ids)
     "security_groups" = join(",", [module.eks.alb_sg, module.eks.cluster_sg])
