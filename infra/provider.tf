@@ -12,7 +12,7 @@ provider "helm" {
 
 terraform {
   backend "s3" {
-    bucket = "afasfasfas2421asfsarittfsatahbwt"
+    bucket = "tasasfsarithbwttesfformsteaet"
     key = "terraform.tfstate"
     region = "us-east-1"
     dynamodb_table = "terraform-tfstate"

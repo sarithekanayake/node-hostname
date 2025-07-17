@@ -1,6 +1,11 @@
 name: Build node-hostname images and push to ECR registry
 
 on:
+  workflow_dispatch:
+    inputs:
+      s3bucketname:
+        description: "S3 bucketname to store terraformstate file"
+        required: true
   push:
     branches: [ "master" ]
 
@@ -29,7 +34,7 @@ jobs:
           name: aws-acc-bootstrap
           template: bootstrap.yaml
           no-fail-on-empty-changeset: "1"
-          parameter-overrides: BucketName=afasfasfas2421asfsarittfsatahbwt,RepoName=${{ env.ECR_REPOSITORY }}
+          parameter-overrides: BucketName=${{ github.event.inputs.environment }},RepoName=${{ env.ECR_REPOSITORY }}
 
   build-and-push:
     name: Build and Push to ECR
