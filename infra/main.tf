@@ -61,7 +61,7 @@ resource "helm_release" "node-hostname" {
 }
 
 resource "aws_eks_access_entry" "iam_user" {
-  cluster_name  = data.aws_eks_cluster.cluster.name
+  cluster_name  = data.aws_eks_cluster.eks.name
   principal_arn = "${local.iam_user_arn}"
   type          = "STANDARD" 
 
@@ -69,9 +69,9 @@ resource "aws_eks_access_entry" "iam_user" {
 }
 
 resource "aws_eks_access_policy_association" "iam_user" {
-  cluster_name = data.aws_eks_cluster.eks.name
+  cluster_name  = data.aws_eks_cluster.eks.name
   principal_arn = "${local.iam_user_arn}"
-  policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   access_scope {
     type = "cluster"
   }
