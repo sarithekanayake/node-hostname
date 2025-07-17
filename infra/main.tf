@@ -1,7 +1,8 @@
 locals {
-  account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region.current.name
-  ecr_repo    = "${local.account_id}.dkr.ecr.${local.region}.amazonaws.com/${var.repo_name}"
+  account_id    = data.aws_caller_identity.current.account_id
+  region        = data.aws_region.current.name
+  ecr_repo      = "${local.account_id}.dkr.ecr.${local.region}.amazonaws.com/${var.repo_name}"
+  iam_user_arn  = "arn:aws:iam::${local.account_id}:user/sarithe"
 }
 
 module "vpc" {
@@ -57,4 +58,22 @@ resource "helm_release" "node-hostname" {
   }
   ))]
   depends_on = [ module.dns ]
+}
+
+resource "aws_eks_access_entry" "iam_user" {
+  cluster_name  = data.aws_eks_cluster.cluster.name
+  principal_arn = "${local.iam_user_arn}"
+  type          = "STANDARD" 
+
+  depends_on = [ helm_release.node-hostname ]
+}
+
+resource "aws_eks_access_policy_association" "iam_user" {
+  cluster_name = data.aws_eks_cluster.eks.name
+  principal_arn = "${local.iam_user_arn}"
+  policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  access_scope {
+    type = "cluster"
+  }
+  depends_on = [ helm_release.node-hostname ]
 }
