@@ -11,13 +11,7 @@ provider "helm" {
 }
 
 terraform {
-  # backend "s3" {
-  #   bucket = "bwt-tfstate-sarith-xs352445sffysfc"
-  #   key = "terraform.tfstate"
-  #   region = "us-east-1"
-  #   dynamodb_table = "terraform-tfstate"
-  #   encrypt = true
-  # }
+  backend "s3" {}
   required_providers {
     aws = {
         source = "hashicorp/aws"

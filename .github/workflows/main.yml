@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: node-hostname
-  S3BucketName: bwt-tfstate-sarith-xs352445sffysfc
+  S3BucketName: bwt-tfstate-sarith-12dfc445sffysfc
   TF_Key: terraform.tfstate
   Dynamodb_Table: terraform-tfstate
 
