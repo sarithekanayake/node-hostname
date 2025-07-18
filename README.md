@@ -52,9 +52,10 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
     6. Click on `New repository secret`.
     7. Add `AWS_ACCESS_KEY_ID` and `SECRET_ACCESS_KEY` with the correct values.
     8. Update `S3BucketName` value of `.github/workflows/main.yml` with a unique S3 Bucket name.
-    9. Commit the change to the `master` branch.
-    10. Commit should trigger a new workflow execution.
-    11. Wait for the workflow to complete.
+    9. Open the `variables.tf` file and update the values based on your setup.
+    10. Commit the changes to the `master` branch.
+    11. Commit should trigger a new workflow execution.
+    12. Wait for the workflow to complete.
     
 
 

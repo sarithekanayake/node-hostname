@@ -56,3 +56,9 @@ variable "image_tag" {
   type = string
   description = "Image tag of the docker image"
 }
+
+variable "iam_user" {
+  type = string
+  description = "Name of an existing IAM user to grant access to the EKS cluster"
+  default = "sarithe"
+}

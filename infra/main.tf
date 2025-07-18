@@ -7,7 +7,7 @@ locals {
   ecr_repo      = "${local.account_id}.dkr.ecr.${local.region}.amazonaws.com/${var.repo_name}"
 
   # Define the full ARN of the IAM user that should have access to EKS
-  iam_user_arn  = "arn:aws:iam::${local.account_id}:user/sarithe"
+  iam_user_arn  = "arn:aws:iam::${local.account_id}:user/${var.iam_user}"
 }
 
 #------------------------
