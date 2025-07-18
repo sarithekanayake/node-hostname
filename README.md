@@ -29,7 +29,7 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
   - base_values folder contains `values.yaml` file which uses for node-hostname Helm chart.
 
 - **GitHub Action Workflow**:
-`.github/workflows/main.yml` use as the GitHub pipeline for bootstrapping, Docker image build and push to ECR, infrastructure creation and application deployment. 
+`.github/workflows/main.yml` use as the GitHub pipeline for bootstrapping (S3 Bucket, DynamoDB, ECR), Docker image build and push to ECR, infrastructure creation and application deployment using Terraform. 
 
 
 

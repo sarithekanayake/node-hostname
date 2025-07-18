@@ -14,7 +14,7 @@ locals {
 # VPC Module
 #------------------------
 module "vpc" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.1"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.2"
 
   env = var.env
 
@@ -31,7 +31,7 @@ module "vpc" {
 # EKS Module
 #------------------------
 module "eks" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.4.1"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.4.2"
 
   # Cluster identification and K8s version
   env = var.env
@@ -62,7 +62,7 @@ module "eks" {
 # Route53 DNS and ACM (SSL) Module
 #------------------------
 module "dns" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.4.1"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.4.2"
 
   domain_name = var.domain_name
 
