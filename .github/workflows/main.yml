@@ -1,9 +1,13 @@
 name: Infrastructure & Application deployment pipeline
 
+
+# Trigger the workflow on every push to the "master" branch
 on:
   push:
     branches: [ "master" ]
 
+# Global environment variables for AWS configuration and Terraform backend
+# Update env.S3BucketName value to an unique value to create a S3 bucket to save terraformstate files
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: node-hostname
@@ -61,10 +65,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # Generate a short Git commit SHA to use as the image tag and this will be passed to plan, apply stages
+      # to use as a input variable to Terraform plan and apply.
       - name: Set outputs
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
+      # Build the image for both AMD64, ARM64 architectures
       - name: Build, Tag and Push to ECR
         id: build-and-push
         uses: docker/build-push-action@v5
@@ -95,9 +102,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       
+      # Initialize Terraform with remote backend (S3 and DynamoDB) using backend-config overrides
       - name: Terraform Init
         run: terraform init -backend-config="bucket=${{ env.S3BucketName }}" -backend-config="key=${{ env.TF_Key }}" -backend-config="region=${{ env.AWS_REGION }}" -backend-config="dynamodb_table=${{ env.Dynamodb_Table }}"
 
+      # Generate Terraform plan. Using image_tag from 'build-and-push' stage
       - name: View Terraform Plan
         run: terraform plan -var="image_tag=${{ needs.build-and-push.outputs.image_tag }}"
 
@@ -122,8 +131,10 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       
+      # Initialize Terraform with remote backend (S3 and DynamoDB) using backend-config overrides
       - name: Terraform Init
         run: terraform init -backend-config="bucket=${{ env.S3BucketName }}" -backend-config="key=${{ env.TF_Key }}" -backend-config="region=${{ env.AWS_REGION }}" -backend-config="dynamodb_table=${{ env.Dynamodb_Table }}"
 
+      # Apply Terraform. Using image_tag from 'build-and-push' stage
       - name: Run Terraform Apply
         run: terraform apply --auto-approve -var="image_tag=${{ needs.build-and-push.outputs.image_tag }}"
