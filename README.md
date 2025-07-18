@@ -18,7 +18,12 @@ This repository uses Terraform, CloudFormation, and Helm chart configurations to
   - Both ENTRYPOINT and CMD have used for flexibility. 
 
 - **Helm Chart**:
-`helm\node-hostname` Helm chart installs K8s resources needed to run the node-hostname application. It sets up a Deployment, Service, and Ingress to expose the app through an HTTPS enabled ALB. EKS cluster uses the AWS Load Balancer Controller and ExternalDNS to automatically create the necessary components to make the app accessible over the internet. 
+`helm\node-hostname` Helm chart installs K8s resources needed to run the node-hostname application. 
+  - Sets up a Deployment, Service, HPA and Ingress to expose the app through an HTTPS enabled ALB. 
+  - EKS cluster uses the AWS Load Balancer Controller and ExternalDNS to automatically create the necessary components to make the app accessible over the internet.
+  - Configured to run the PODs without priviledge access (non-root user, read-only filesystem and all capabilities dropped).
+  - Using Horizontal Pod Autoscaler (HPA) for POD autoscaling based on resource utilizations (cpu:40%, mem:80%).
+  - Use a load testing tool like `hey` to simulate traffic. ex: `hey -z 30s -c 50 https://bwt.sarithe.online`
 
 - **CloudFormation Template**:
 Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb table and ECR repository creation. These resources will be used by the Terraform code as prerequisites.
