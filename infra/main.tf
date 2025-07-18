@@ -6,7 +6,7 @@ locals {
 }
 
 module "vpc" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.0"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.1"
 
   env = var.env
   no_of_pri_subs = 2
@@ -15,7 +15,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.4.0"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.4.1"
 
   env = var.env
   eks_name = var.eks_name
@@ -35,7 +35,7 @@ module "eks" {
 }
 
 module "dns" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.4.0"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.4.1"
 
   domain_name = var.domain_name
 
