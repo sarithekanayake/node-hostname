@@ -39,7 +39,7 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
 - AWS account (https://console.aws.amazon.com/)
 - AWS CLI configured with Access Keys credentials (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - kubectl CLI (https://kubernetes.io/docs/tasks/tools/)
-
+- IAM User (grant access to the EKS cluster)
 
 ## How-to
 
