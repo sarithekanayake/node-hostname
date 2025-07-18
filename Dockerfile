@@ -14,8 +14,8 @@ RUN --mount=type=cache,target=/app/.npm \
     npm set cache /app/.npm && \
     npm install 
 
-# Switch to a non-root user (node) for better security
-USER node
+# Switch to a non-root user (node uid:1000) for better security
+USER 1000
 
 COPY --chown=node:node src/ .
 
