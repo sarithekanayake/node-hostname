@@ -59,10 +59,10 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
     8. Navigate to `Secrets and variables` again.
     9. Click on `New repository variable`.
     10. Create variables called `AWS_REGION`, `S3BUCKETNAME`, `ECR_REPOSITORY`, `DYNAMODB_TABLE`, `TF_KEY` with the correct values.
-    9. Open the `variables.tf` file and update the values based on your setup.
-    10. Commit the changes to the `master` branch.
-    11. Commit should trigger a new workflow execution.
-    12. Wait for the workflow to complete.
+    11. Open the `variables.tf` file and update the values based on your setup.
+    12. Commit the changes to the `master` branch.
+    13. Commit should trigger a new workflow execution.
+    14. Wait for the workflow to complete.
     
 
 
