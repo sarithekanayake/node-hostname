@@ -18,12 +18,11 @@ This repository uses Terraform, CloudFormation, and Helm chart configurations to
   - Both ENTRYPOINT and CMD have used for flexibility. 
 
 - **Helm Chart**:
-`helm\node-hostname` Helm chart installs K8s resources needed to run the node-hostname application. 
+`helm/node-hostname` Helm chart installs K8s resources needed to run the node-hostname application. 
   - Sets up a Deployment, Service, HPA and Ingress to expose the app through an HTTPS enabled ALB. 
   - EKS cluster uses the AWS Load Balancer Controller and ExternalDNS to automatically create the necessary components to make the app accessible over the internet.
   - Configured to run the PODs without priviledge access (non-root user, read-only filesystem and all capabilities dropped).
   - Using Horizontal Pod Autoscaler (HPA) for POD autoscaling based on resource utilizations (cpu:40%, mem:80%).
-  - Use a load testing tool like `hey` to simulate traffic. ex: `hey -z 30s -c 50 https://bwt.sarithe.online`
 
 - **CloudFormation Template**:
 Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb table and ECR repository creation. These resources will be used by the Terraform code as prerequisites.
@@ -59,7 +58,7 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
     7. Create variables called `AWS_ACCESS_KEY_ID` and `SECRET_ACCESS_KEY` using the credentials of the GitHub Action IAM user.
     8. Navigate to `Secrets and variables` again.
     9. Click on `New repository variable`.
-    10. Create variables called `AWS_REGION`, `S3BucketName`, `ECR_REPOSITORY`, `DYNAMODB_TABLE`, `TF_KEY` with the correct values.
+    10. Create variables called `AWS_REGION`, `S3BUCKETNAME`, `ECR_REPOSITORY`, `DYNAMODB_TABLE`, `TF_KEY` with the correct values.
     9. Open the `variables.tf` file and update the values based on your setup.
     10. Commit the changes to the `master` branch.
     11. Commit should trigger a new workflow execution.
@@ -72,6 +71,8 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
     1. Open up a new terminal window.
     2. Run `aws eks update-kubeconfig --region <region-code> --name <cluster-name>`. Replace the region and name of the EKS cluster with correct values.
     3. Now, should be able to interact with the EKS cluster using kubectl.
+    4. To check HPA, use a load testing tool like `hey` to simulate traffic. ex: `hey -z 60s -c 50 https://bwt.sarithe.online`
+    5. To check Cluster Autoscaler, deploy a workload that exceeds the capacity of the current nodes.
 
 
 
