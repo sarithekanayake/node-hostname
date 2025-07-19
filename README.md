@@ -42,9 +42,10 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
 
 - GitHub account (https://gitlab.com/)
 - AWS account (https://console.aws.amazon.com/)
-- AWS CLI configured with Access Keys credentials (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- kubectl CLI (https://kubernetes.io/docs/tasks/tools/)
-- IAM User (grant access to the EKS cluster)
+- AWS CLI installed (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- kubectl CLI installed (https://kubernetes.io/docs/tasks/tools/)
+- A regular IAM user with the AWS CLI configured (grant access to the EKS cluster)
+- An IAM user for use with GitHub Actions, configured with AWS_ACCESS_KEY_ID and SECRET_ACCESS_KEY
 
 ## How-to
 
@@ -55,8 +56,10 @@ Created `bootstrap.yaml` Cloudformation template to boostrap S3 bucket, dynamodb
     4. Navigate to `Secrets and variables` in Settings tab.
     5. Drop down `Secrets and variables` and select `Actions`.
     6. Click on `New repository secret`.
-    7. Add `AWS_ACCESS_KEY_ID` and `SECRET_ACCESS_KEY` with the correct values.
-    8. Update `S3BucketName` value of `.github/workflows/main.yml` with a unique S3 Bucket name.
+    7. Create variables called `AWS_ACCESS_KEY_ID` and `SECRET_ACCESS_KEY` using the credentials of the GitHub Action IAM user.
+    8. Navigate to `Secrets and variables` again.
+    9. Click on `New repository variable`.
+    10. Create variables called `AWS_REGION`, `S3BucketName`, `ECR_REPOSITORY`, `DYNAMODB_TABLE`, `TF_KEY` with the correct values.
     9. Open the `variables.tf` file and update the values based on your setup.
     10. Commit the changes to the `master` branch.
     11. Commit should trigger a new workflow execution.

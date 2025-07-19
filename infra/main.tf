@@ -14,7 +14,7 @@ locals {
 # VPC Module
 #------------------------
 module "vpc" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.4.2"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//vpc?ref=v1.5.0"
 
   env = var.env
 
@@ -31,7 +31,7 @@ module "vpc" {
 # EKS Module
 #------------------------
 module "eks" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.4.2"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//eks?ref=v1.5.0"
 
   # Cluster identification and K8s version
   env = var.env
@@ -42,9 +42,6 @@ module "eks" {
   desired_size = var.desired_size
   max_size = var.max_size
   min_size = var.min_size
-
-  # AWS Loadbalancer Controller Version
-  aws_lbc_version = var.aws_lbc_version
 
   # Networking configuration
   # EKS cluster, node group -> private subnets
@@ -62,7 +59,7 @@ module "eks" {
 # Route53 DNS and ACM (SSL) Module
 #------------------------
 module "dns" {
-  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.4.2"
+  source = "git::https://github.com/sarithekanayake/bwt-tf-modules.git//dns?ref=v1.5.0"
 
   domain_name = var.domain_name
 

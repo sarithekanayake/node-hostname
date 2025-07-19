@@ -9,11 +9,11 @@ on:
 # Global environment variables for AWS configuration and Terraform backend
 # Update env.S3BucketName value to an unique value to create a S3 bucket to save terraformstate files
 env:
-  AWS_REGION: us-east-1
-  ECR_REPOSITORY: node-hostname
-  S3BucketName: bwt-assignment-sarith-tfstate
-  TF_Key: terraform.tfstate
-  Dynamodb_Table: terraform-tfstate
+  AWS_REGION: ${{ var.AWS_REGION  }}
+  ECR_REPOSITORY: ${{ var.ECR_REPOSITORY  }}
+  S3BucketName: ${{ var.S3BUCKETNAME  }}
+  TF_Key: ${{ var.TF_KEY  }}
+  Dynamodb_Table: ${{ var.DYNAMODB_TABLE  }}
 
 jobs:
   bootstrap-aws-acc:
